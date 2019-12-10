@@ -8,6 +8,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1
   def show
+    @task = Task.find(params[:id])
   end
 
   # GET /tasks/new
@@ -53,6 +54,6 @@ class TasksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:name, :content, :rank, :deadline, :status)
+      params.require(:task).permit(:title, :content, :rank, :deadline, :status)
     end
 end
