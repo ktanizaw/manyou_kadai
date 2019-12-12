@@ -64,4 +64,13 @@ RSpec.describe 'タスク管理機能', type: :system do
         end
        end
      end
+
+  describe 'タスク一覧画面' do
+     context 'タスクの終了期限を降順にソートした場合' do
+       it '該当タスクが終了期限を降順に表示されたページに遷移すること' do
+         visit tasks_path
+         expect(Task.order(deadline: :desc).map(&:id)).to eq [2, 1]
+        end
+     end
   end
+end
