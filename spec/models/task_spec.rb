@@ -8,20 +8,8 @@ RSpec.describe 'タスク管理機能', type: :model do
     expect(task.errors[:title]).to include("入力してください！")
   end
 
-  it 'rankが空ならバリデーションが通らない' do
-    task = Task.new(rank: '')
-    task.valid?
-    expect(task.errors[:rank]).to include("入力してください！")
-  end
-
-  it 'statusが空ならバリデーションが通らない' do
-    task = Task.new(status: '')
-    task.valid?
-    expect(task.errors[:status]).to include("入力してください！")
-  end
-
   it 'titleとrankとstatusに内容が記載されていればバリデーションが通る' do
-    task = Task.new(title: 'テスト', rank: 'テスト', status:'テスト')
+    task = Task.new(title: 'テスト', rank: 1, status: 1)
     expect(task).to be_valid
   end
 
@@ -35,13 +23,21 @@ RSpec.describe 'タスク管理機能', type: :model do
     expect(task).not_to be_valid
   end
 
-  it 'rankの文字数が6文字以上だとバリデーションが通らない' do
-    task = Task.new(rank: "aaaaaa")
-    expect(task).not_to be_valid
+  before do
+    @task1 = FactoryBot.create(:task)
+    @task2 = FactoryBot.create(:second_task)
   end
 
-  it 'statusの文字数が6文字以上だとバリデーションが通らない' do
-    task = Task.new(status: "aaaaaa")
-    expect(task).not_to be_valid
+  it 'get_by_titleメソッド使用時、titleが一致した場合' do
+    expect(Task.get_by_title("タイトル１")).to include(@task1)
   end
+
+  it 'get_by_titleメソッド使用時、titleのデータが存在しない場合' do
+    expect(Task.get_by_title("タイトルなし")).not_to include(@task1)
+  end
+
+  it 'get_by_statusメソッド使用時、statusに未着手を選択した場合' do
+    expect(Task.get_by_status(1)).to include(@task1)
+  end
+
 end

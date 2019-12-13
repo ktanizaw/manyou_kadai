@@ -8,6 +8,9 @@ class TasksController < ApplicationController
     if params[:sort_expired]
       @tasks = Task.all.order(deadline: :desc)
     end
+    if params[:sort_rank]
+      @tasks = Task.all.order(rank: :desc)
+    end
     if params[:title].present?
       @tasks = @tasks.get_by_title params[:title]
     end

@@ -6,15 +6,12 @@ class Task < ApplicationRecord
   validates :content,
     length: { maximum: 30 }
 
-  validates :rank,
-    presence: true, presence: {message: "入力してください！"},
-    length: { maximum: 5 }
+  # validates :status,presence: true
 
-  validates :status,
-    presence: true, presence: {message: "入力してください！"},
-    length: { maximum: 5 }
+  enum status: { "未着手": 1, "着手中": 2, "完了": 3 }
 
-  enum status: { "未着手": 0, "着手中": 1, "完了": 2 }
+  enum rank: { "低": 1, "中": 2, "高": 3 }
+
     # タイトルによる絞り込み
   scope :get_by_title, ->(title) {
     where("title like ?", "%#{title}%")
