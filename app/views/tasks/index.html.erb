@@ -1,10 +1,21 @@
 
 <h1>Tasks</h1>
 
+<div class="">
+<%= form_tag(tasks_path, :method => 'get' ) do %>
+<%= label_tag :title, "タイトル" %>
+<%= text_field_tag :title, params[:title] %>
+<%= label_tag :status, "ステータス" %>
+<%= select_tag :status, options_for_select(Task.statuses), include_blank: true %>
+<%= submit_tag '絞り込み'%>
+<% end %>
+</div>
+
 <table>
   <thead>
     <tr>
-      <th>Title</th>
+      <th>Title
+      </th>
       <th>Content</th>
       <th>Rank</th>
       <th>Deadline</th>
