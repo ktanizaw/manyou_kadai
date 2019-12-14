@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_060649) do
+ActiveRecord::Schema.define(version: 2019_12_14_112252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,10 +24,10 @@ ActiveRecord::Schema.define(version: 2019_12_13_060649) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "title", null: false
-    t.text "content"
-    t.integer "rank"
-    t.datetime "deadline"
-    t.integer "status"
+    t.text "content", null: false
+    t.string "rank", null: false
+    t.datetime "deadline", null: false
+    t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status"], name: "index_tasks_on_status"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 2019_12_13_060649) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.text "email"
+    t.string "name", null: false
+    t.text "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
