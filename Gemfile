@@ -24,6 +24,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'launchy'
+  gem 'kaminari'
+  gem 'kaminari-bootstrap', '~> 3.0.1'
 end
 
 group :development do

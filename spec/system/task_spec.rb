@@ -16,6 +16,9 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいること' do
       visit tasks_path
+      task_list = all('.task_list')
+      # expect(task_list[0]).to have_content 'タイトル２'
+      # expect(task_list[1]).to have_content 'タイトル１'
       expect(Task.order(created_at: :desc).map(&:id)).to eq [2, 1]
       end
     end
@@ -38,8 +41,8 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移すること' do
-         @task1 = Task.create(title: 'タイトル１', content:'テスト', rank: 1, status: 1)
-         @task2 = Task.create(title: 'タイトル２', content:'テスト２', rank: 2, status: 1)
+         @task1 = FactoryBot.create(:task)
+         @task2 = FactoryBot.create(:second_task)
         visit task_path(@task1.id)
         expect(page).to have_content @task1.title
         expect(page).not_to have_content @task2.title
