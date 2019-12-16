@@ -1,8 +1,8 @@
 # アプリ名
-## アプリ概要
+<!-- ## アプリ概要
 ## バージョン
 ## 機能一覧
-## カタログ設計
+## カタログ設計 -->
 ## テーブル構造
 
 ### Userテーブル
@@ -30,6 +30,42 @@
 | content          |              text |           ラベル内容 |
 
 
-## ER図
-## ワイヤーフレームワーク
-## 使用Gem
+## Herokuへのデプロイ手順
+### アセットプリコンパイル
+アセットプリコンパイルを実行しファイルを圧縮する。
+
+```
+rails assets:precompile RAILS_ENV=production
+```
+
+### コミットまで
+Herokuへpushするためにコミットまで準備しておく。
+
+```
+git add
+```
+
+```
+git commit
+```
+
+### Herokuへのログイン〜プッシュまで
+
+```
+heroku login
+```
+
+```
+heroku create
+```
+
+```
+git push heroku master
+```
+
+DBのマイグレーションを忘れないこと。
+
+```
+heroku run rails db:migrate
+```
+

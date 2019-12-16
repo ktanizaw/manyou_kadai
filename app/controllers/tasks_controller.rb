@@ -1,10 +1,22 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  PER = 5
 
   # GET /tasks
   def index
-    @tasks = Task.all
-    @tasks = Task.order(created_at: :desc)
+    @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(PER)
+    if params[:sort_expired]
+      @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(PER)
+    end
+    if params[:sort_rank]
+      @tasks = Task.all.order(rank: :desc).page(params[:page]).per(PER)
+    end
+    if params[:title].present?
+      @tasks = @tasks.get_by_title params[:title]
+    end
+    if params[:status].present?
+      @tasks = @tasks.get_by_status params[:status]
+    end
   end
 
   # GET /tasks/1
