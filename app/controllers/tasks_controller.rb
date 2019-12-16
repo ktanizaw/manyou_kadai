@@ -4,14 +4,12 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.all
-    @tasks = Task.order(created_at: :desc)
-    @tasks = Task.page(params[:page]).per(5)
+    @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(PER)
     if params[:sort_expired]
-      @tasks = Task.all.order(deadline: :desc)
+      @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(PER)
     end
     if params[:sort_rank]
-      @tasks = Task.all.order(rank: :desc)
+      @tasks = Task.all.order(rank: :desc).page(params[:page]).per(PER)
     end
     if params[:title].present?
       @tasks = @tasks.get_by_title params[:title]

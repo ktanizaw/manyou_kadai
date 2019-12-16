@@ -25,12 +25,11 @@ ActiveRecord::Schema.define(version: 2019_12_15_060417) do
   create_table "tasks", force: :cascade do |t|
     t.string "title", null: false
     t.text "content", null: false
-    t.string "rank", null: false
+    t.integer "rank", null: false
     t.datetime "deadline", null: false
-    t.string "status", null: false
+    t.integer "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
   end
 
