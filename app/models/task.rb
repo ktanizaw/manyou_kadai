@@ -21,5 +21,5 @@ class Task < ApplicationRecord
     }
 
   has_many :labels
-  belongs_to :user
+  belongs_to :user, optional: true
 end

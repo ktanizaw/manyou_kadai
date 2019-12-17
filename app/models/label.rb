@@ -4,6 +4,6 @@ class Label < ApplicationRecord
     length: { maximum: 10 }
   validates :content,
         length: { maximum: 30 }
-  
-  belongs_to :task
+
+  belongs_to :task, optional: true
 end

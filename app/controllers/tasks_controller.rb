@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   # GET /tasks
   def index
     if logged_in?
-    @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(PER)
+    @tasks = current_user.tasks.all.order(created_at: :desc).page(params[:page]).per(PER)
     if params[:sort_expired]
       @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(PER)
     end
@@ -39,8 +39,7 @@ class TasksController < ApplicationController
 
   # POST /tasks
   def create
-    @task = Task.new(task_params)
-
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
     else
@@ -71,6 +70,6 @@ class TasksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:title, :content, :rank, :deadline, :status)
+      params.require(:task).permit(:title, :content, :rank, :deadline, :status, :user_id)
     end
 end

@@ -6,7 +6,7 @@ class CreateTask < ActiveRecord::Migration[5.2]
           t.integer :rank, :null => false
           t.datetime :deadline, :null => false
           t.integer :status, :null => false
-          t.references :user, foreign_key: true
+          # t.references :user, foreign_key: true
 
           t.timestamps
         end
