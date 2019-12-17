@@ -19,4 +19,7 @@ class Task < ApplicationRecord
   scope :get_by_status, ->(status) {
     where(status: status)
     }
+
+  has_many :labels
+  belongs_to :user
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_15_060417) do
+ActiveRecord::Schema.define(version: 2019_12_17_045741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,10 @@ ActiveRecord::Schema.define(version: 2019_12_15_060417) do
   create_table "labels", force: :cascade do |t|
     t.string "name", null: false
     t.text "content", null: false
+    t.bigint "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_labels_on_task_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -28,17 +30,21 @@ ActiveRecord::Schema.define(version: 2019_12_15_060417) do
     t.integer "rank", null: false
     t.datetime "deadline", null: false
     t.integer "status", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["title"], name: "index_tasks_on_title"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.text "email", null: false
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "labels", "tasks"
+  add_foreign_key "tasks", "users"
 end

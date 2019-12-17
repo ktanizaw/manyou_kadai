@@ -27,6 +27,8 @@ group :development, :test do
   gem 'launchy'
   gem 'kaminari'
   gem 'kaminari-bootstrap', '~> 3.0.1'
+  gem 'faker'
+  gem 'bcrypt', '3.1.11'
 end
 
 group :development do
