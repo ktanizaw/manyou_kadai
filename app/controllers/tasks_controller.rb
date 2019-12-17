@@ -4,6 +4,7 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
+    if logged_in?
     @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(PER)
     if params[:sort_expired]
       @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(PER)
@@ -16,6 +17,9 @@ class TasksController < ApplicationController
     end
     if params[:status].present?
       @tasks = @tasks.get_by_status params[:status]
+    end
+    else
+      redirect_to new_session_path
     end
   end
 

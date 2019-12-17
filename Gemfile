@@ -13,7 +13,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-
+gem 'bootstrap', '~> 4.1.1'
+gem 'jquery-rails'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -29,6 +30,8 @@ group :development, :test do
   gem 'kaminari-bootstrap', '~> 3.0.1'
   gem 'faker'
   gem 'bcrypt', '3.1.11'
+  gem 'bootstrap', '~> 4.1.1'
+  gem 'jquery-rails'
 end
 
 group :development do
