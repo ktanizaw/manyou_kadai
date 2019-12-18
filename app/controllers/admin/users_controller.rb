@@ -1,9 +1,9 @@
 class Admin::UsersController < ApplicationController
-  before_action :admin_user
+  before_action :admin_user_confirm
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all.order("created_at DESC")
+    @users = User.select(:id, :name, :email, :password_digest, :created_at, :password, :password_confirmation, :admin)
   end
 
   def new
@@ -17,6 +17,9 @@ class Admin::UsersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
   end
 
   def edit
@@ -36,8 +39,14 @@ class Admin::UsersController < ApplicationController
   end
 
   private
-  def admin_user
-    redirect_to(root_path) unless current_user.admin?
+  def admin_user_confirm
+    if logged_in? == false
+      redirect_to new_session_path
+      flash[:danger] = "ログインしてください"
+    elsif current_user.admin? == false
+    redirect_to(root_path)
+    flash[:danger] = "管理者権限がありません。"
+    end
   end
 
   def set_user
@@ -45,6 +54,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :email, :password,
+                                  :password_confirmation)
   end
 end
