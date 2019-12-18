@@ -16,4 +16,5 @@ class User < ApplicationRecord
 
     has_many :tasks, foreign_key: :user_id, dependent: :destroy
     # has_many :labels, foreign_key: :user_id, dependent: :destroy
+
 end
