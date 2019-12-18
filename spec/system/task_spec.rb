@@ -73,8 +73,7 @@ RSpec.describe 'タスク管理機能', type: :system do
          # click_button '優先順位でソートする'
          # byebug
          # expect(page).to have_text /.*コンテント１.*コンテント２.*/
-
        end
      end
-   end
+   end   
 end
