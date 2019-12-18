@@ -20,6 +20,7 @@ class Task < ApplicationRecord
     where(status: status)
     }
 
-  has_many :labels
+  has_many :labels, foreign_key: :task_id, dependent: :destroy
   belongs_to :user, optional: true
+
 end
