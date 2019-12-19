@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :admin_user_confirm
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :destroy_admin, only: [:destroy]
+  before_action :before_destroy, only: [:destroy]
 
   def index
     @users = User.select(:id, :name, :email, :password_digest, :created_at, :password, :password_confirmation, :admin)
@@ -28,7 +28,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to admin_users_path, notice: 'Task was successfully updated.'
+      redirect_to admin_users_path, notice: 'User was successfully updated.'
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to admin_users_path, notice: 'Task was successfully destroyed.'
+    redirect_to admin_users_path, notice: 'User was successfully destroyed.'
   end
 
   private
@@ -50,13 +50,6 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def destroy_admin
-    if User.where(admin: :true).count <= 1
-      redirect_to admin_users_path
-      flash[:danger] = "これ以上管理者は削除できません"
-    end
-  end
-
   def set_user
     @user = User.find(params[:id])
   end
@@ -64,5 +57,12 @@ class Admin::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password,
                                   :password_confirmation, :admin)
+  end
+
+  def before_destroy
+    if @user.admin? && User.where(admin: :true).count == 2
+      redirect_to admin_users_path
+      flash[:danger] = "これ以上管理者は削除できません"
+    end
   end
 end

@@ -1,4 +1,4 @@
-<h1>タスク一覧</h1>
+<h2><%= @user.name %>のマイページ</h2>
 
 <p>
   <strong>Name:</strong>
@@ -39,4 +39,5 @@
   </div>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', users_path %> |
+<%= link_to 'タスク一覧へ', tasks_path %>
