@@ -19,4 +19,8 @@ class Task < ApplicationRecord
   scope :get_by_status, ->(status) {
     where(status: status)
     }
+
+  has_many :labels, foreign_key: :task_id, dependent: :destroy
+  belongs_to :user, optional: true
+
 end
