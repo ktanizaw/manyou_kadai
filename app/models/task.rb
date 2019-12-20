@@ -19,8 +19,13 @@ class Task < ApplicationRecord
   scope :get_by_status, ->(status) {
     where(status: status)
     }
+    #ラベルによる絞り込み
+  scope :get_by_label, ->(label) {
+    where(id: label)
+    }
 
-  has_many :labels, foreign_key: :task_id, dependent: :destroy
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings, dependent: :destroy
+  has_many :labelling_labels, through: :labellings, source: :label
   belongs_to :user, optional: true
-
 end

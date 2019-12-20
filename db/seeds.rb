@@ -7,12 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 10.times do |n|
-  name = Faker::JapaneseMedia::DragonBall.character
+  name = Faker::Movies::StarWars.character
   email = Faker::Internet.email
   password = "password"
-  User.create!(name: name,
-               email: email,
-               password: password,
-               password_confirmation: password,
+  Label.create!(name: name,
+               # email: email,
+               # password: password,
+               # password_confirmation: password,
                )
 end

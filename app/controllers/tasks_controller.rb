@@ -4,8 +4,10 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
+    @tasks = Task.all
+    # @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
     if logged_in?
-    @tasks = current_user.tasks.all.order(created_at: :desc).page(params[:page]).per(PER)
+      @tasks = current_user.tasks.all.order(created_at: :desc).page(params[:page]).per(PER)
     if params[:sort_expired]
       @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(PER)
     end
@@ -17,6 +19,19 @@ class TasksController < ApplicationController
     end
     if params[:status].present?
       @tasks = @tasks.get_by_status params[:status]
+      # binding.irb
+    end
+    if params[:label].present?
+      @label_id = params[:label].to_i
+      @labellings = Labelling.where(label_id: @label_id)
+      @tasks = Task.where(id: @labellings.pluck(:task_id)).page(params[:page]).per(PER)
+      # @tasks = @tasks.get_by_label params[:label]
+      # puts @labellings
+      # @labellings.each do |labelling|
+      #   puts labelling.task_id
+      # end
+      # @tasks = @labellings.tasks
+      # @tasks = Task.where(@labellings)
     end
     else
       redirect_to new_session_path
@@ -40,7 +55,9 @@ class TasksController < ApplicationController
   # POST /tasks
   def create
     @task = current_user.tasks.build(task_params)
+    # label_list = params[:task][:label_name].split(",")
     if @task.save
+      # @task.save_tasks(label_list)
       redirect_to @task, notice: 'Task was successfully created.'
     else
       render :new
@@ -70,6 +87,6 @@ class TasksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:title, :content, :rank, :deadline, :status, :user_id)
+      params.require(:task).permit(:title, :content, :rank, :deadline, :status, :user_id, { label_ids: [] })
     end
 end
