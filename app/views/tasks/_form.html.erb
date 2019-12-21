@@ -27,10 +27,10 @@
     <%= form.label :status %>
     <%= form.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]]%>
 
-    <%= form.hidden_field :user_id, value: current_user.id %>
-
     <%= form.label :label %>
     <%= form.collection_check_boxes( :label_ids, Label.all, :id, :name) %>
+
+    <%= form.hidden_field :user_id, value: current_user.id %>
   </div>
 
   <div class="actions">

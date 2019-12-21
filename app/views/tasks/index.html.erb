@@ -56,8 +56,8 @@
 <button type="button" class="btn btn-primary">
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true" ), :style=>"color:white;"%>
 </button>
-<button type="button" class="btn btn-success">
-<%= link_to "優先順位でソートする", tasks_path(sort_rank: "true"), id: "id_name", :style=>"color:white;"%>
+<button type="button" class="btn btn-success" id ="id_name">
+<%= link_to "優先順位でソートする", tasks_path(sort_rank: "true"), :style=>"color:white;"%>
 </button>
 <br>
 <%= paginate @tasks%>
