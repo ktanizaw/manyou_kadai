@@ -14,12 +14,12 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
 
   describe 'タスク一覧画面' do
-   #  context 'タスクを作成した場合' do
-   #    it '作成済みのタスクが表示されること' do
-	 #    visit tasks_path
-   #    expect(page).to have_content 'タイトル１'
-	 #   end
-   # end
+    context 'タスクを作成した場合' do
+      it '作成済みのタスクが表示されること' do
+	    visit tasks_path
+      expect(page).to have_content 'タイトル１'
+	   end
+   end
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいること' do
       visit tasks_path
