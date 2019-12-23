@@ -18,7 +18,7 @@ class User < ApplicationRecord
     has_secure_password
 
     has_many :tasks, foreign_key: :user_id, dependent: :destroy
-    # has_many :labels, foreign_key: :user_id, dependent: :destroy
+    has_many :labels, foreign_key: :user_id, dependent: :destroy
     private
 
     def must_not_destroy_admin

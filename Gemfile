@@ -28,7 +28,6 @@ group :development, :test do
   gem 'launchy'
   gem 'kaminari'
   gem 'kaminari-bootstrap', '~> 3.0.1'
-  gem 'faker'
   gem 'bcrypt', '3.1.11'
   gem 'bootstrap', '~> 4.4.1'
   gem 'jquery-rails'
@@ -44,6 +43,9 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'webdrivers'
+  # gem 'selenium-webdriver', '2.35.1'
+  # gem 'capybara', '2.2.0'
+  gem 'launchy'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

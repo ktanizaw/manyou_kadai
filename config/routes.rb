@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :tasks
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :labellings, only: [:create, :destroy]
 
   namespace :admin do
     resources :users

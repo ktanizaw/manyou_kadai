@@ -1,10 +1,10 @@
 class Label < ApplicationRecord
   validates :name,
     presence: true, presence: {message: "入力してください！"},
-    length: { maximum: 10 }
-  validates :content,
-        length: { maximum: 30 }
+    length: { maximum: 30 }
 
-  belongs_to :task, optional: true
   belongs_to :user, optional: true
+  has_many :labellings, dependent: :destroy
+  has_many :tasks, through: :labellings
+  has_many :labelling_tasks, through: :labellings, source: :task
 end
