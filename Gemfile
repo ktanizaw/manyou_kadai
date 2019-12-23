@@ -15,6 +15,7 @@ gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
+gem 'bcrypt', '3.1.11'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
