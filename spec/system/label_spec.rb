@@ -2,38 +2,35 @@ require 'rails_helper'
 
 RSpec.describe 'ラベル管理機能', type: :system do
   before do
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
     FactoryBot.create(:user)
     FactoryBot.create(:second_user)
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
     FactoryBot.create(:label)
     FactoryBot.create(:second_label)
     FactoryBot.create(:labelling)
     FactoryBot.create(:second_labelling)
-  end
-
   def login_admin
-    visit new_session_path
-    fill_in 'Email', with: 'test1@a.com'
-    fill_in 'Password', with: 'hogehoge'
-    click_on 'ログインする'
+        visit new_session_path
+        fill_in 'Email', with: 'test1@test.com'
+        fill_in 'Password', with: 'test111'
+        click_on 'Log in'
+  end
   end
 
     describe 'ラベル登録画面' do
       context '必要項目を入力して、createボタンを押した場合' do
-        it 'データ保存後、タスク一覧に表示されること' do
+        it 'データ保存後、タスク一覧画面に表示される' do
           visit new_label_path
-          fill_in 'label[label_type]', with: 'デバッグ'
-          click_on('登録する')
-          sleep 2
-          task_list = page.all('tr')
-          expect(task_list[1]).to have_content 'デバッグ'
+          fill_in 'Name', with: 'test1'
+          click_on('Create Label')
+          expect(page).to have_content 'test1'
         end
 
-        it '空白のラベルは作成できないこと' do
+        it '空白のラベルは保存されない' do
           visit new_label_path
-          click_on('登録する')
-          expect(page).to have_content 'ラベル名を入力してください'
+          click_on('Create Label')
+          expect(page).to have_content "入力してください！"
         end
       end
     end
@@ -41,50 +38,26 @@ RSpec.describe 'ラベル管理機能', type: :system do
     describe 'タスク一覧・詳細画面' do
       context 'ラベル付タスクを作成した場合' do
         it 'タスク一覧にラベルが表示されること' do
-          visit tasks_path
-          expect(page).to have_content '会議'
-          expect(page).to have_content 'リカバリー'
-        end
-
-        it 'タスク詳細にラベルが表示されること' do
-          visit task_path(1)
-          expect(page).to have_content '会議'
-        end
-      end
-    end
-
-    describe 'タスク作成画面' do
-      context 'タスクを新規作成する場合' do
-        it '他ユーザーのラベルは表示されないこと' do
           visit new_task_path
-          task_list = page.all('tr')
-          expect(page).to have_content '会議'
-          expect(page).to have_content 'リカバリー'
-          expect(page).not_to have_content '修正'
+          fill_in "Title", with: "タイトル１"
+          fill_in "Content", with: "コンテント１"
+          check "label_ids[1]"
+          click_on 'Create Task'
+          visit tasks_path
+          expect(page).to have_content "test1"
         end
-      end
     end
+  end
 
-    describe '検索機能' do
-      context '検索機能' do
-        it 'ラベルで絞り込み検索できること' do
+    describe 'ラベル検索機能' do
+      context 'ラベルで絞り込み検索した場合' do
+        it '絞り込んだラベルが表示される' do
           visit tasks_path
-          select '会議', from: 'task[label_id]'
-          click_on('検索')
-          sleep 2
+          select 'test1', from: 'label_ids[]'
+          click_on('絞り込み')
           task_list = page.all('tr')
-          expect(task_list[1]).to have_content '会議'
-          expect(task_list[2]).not_to have_content 'リカバリー'
-        end
-
-        it '他ユーザーのラベル（タスク）が出てこないこと' do
-          visit tasks_path
-          select 'リカバリー', from: 'task[label_id]'
-          click_on('検索')
-          sleep 2
-          task_list = page.all('tr')
-          expect(task_list[1]).to have_content 'リカバリー'
-          expect(task_list[2]).not_to have_content '修正'
+          expect(task_list[1]).to have_content 'test1'
+          expect(task_list[2]).not_to have_content 'test2'
         end
       end
     end
