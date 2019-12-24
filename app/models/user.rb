@@ -13,9 +13,9 @@ class User < ApplicationRecord
     format: { with: VALID_EMAIL_REGEX },
     length: { maximum: 255 }
 
-  validates :password,
-    presence: true, length: { minimum: 6 }
     has_secure_password
+    validates :password,
+    presence: true, length: { minimum: 6 }
 
     has_many :tasks, foreign_key: :user_id, dependent: :destroy
     has_many :labels, foreign_key: :user_id, dependent: :destroy
