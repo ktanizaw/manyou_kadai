@@ -1,7 +1,7 @@
 class Task < ApplicationRecord
   validates :title,
     presence: true,
-    # {message: "入力してください！"},
+    # presence: {message: "入力してください！"},
     length: { maximum: 10 }
 
   validates :content,
