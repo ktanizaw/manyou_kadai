@@ -19,12 +19,12 @@ class TasksController < ApplicationController
     end
     if params[:status].present?
       @tasks = @tasks.get_by_status params[:status]
-      # binding.irb
     end
     if params[:label].present?
       @label_id = params[:label].to_i
       @labellings = Labelling.where(label_id: @label_id)
-      @tasks = Task.where(id: @labellings.pluck(:task_id)).page(params[:page]).per(PER)
+      @tasks = Task.where(id: @labellings.pluck(:task_id)).page(params[:page]).per(PER).where(user_id: current_user.id)
+      # binding.irb
       # @tasks = @tasks.get_by_label params[:label]
       # puts @labellings
       # @labellings.each do |labelling|
